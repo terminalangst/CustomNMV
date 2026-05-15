@@ -1,5 +1,7 @@
 package funkin.backend;
 
+import funkin.backend.macro.GitMacro;
+
 import openfl.display.BitmapData;
 import openfl.display.Bitmap;
 import openfl.text.TextField;
@@ -125,7 +127,7 @@ class DebugDisplay extends Sprite
 		textUnderlay.bitmapData = new BitmapData(1, 1, true, 0x6F000000);
 		
 		final textFormat = new TextFormat(Assets.getFont("assets/fonts/aller.ttf").fontName, 14, color);
-		textFormat.leading = 5;
+		textFormat.leading = 1;
 		
 		textField = new TextField();
 		textField.selectable = false;
@@ -133,7 +135,8 @@ class DebugDisplay extends Sprite
 		textField.defaultTextFormat = textFormat;
 		textField.autoSize = LEFT;
 		textField.multiline = true;
-		textField.text = "FPS: ";
+		textField.alpha = 0.6;
+        textField.text = "0 FPS";
 		
 		displayType = FpsDisplayMode.fromString(ClientPrefs.fpsDisplayType);
 		
@@ -171,7 +174,7 @@ class DebugDisplay extends Sprite
 		currentFPS = times.length < FlxG.updateFramerate ? times.length : FlxG.updateFramerate;
 		updateText();
 		textUnderlay.width = textField.width + 3;
-		textUnderlay.height = textField.height + (displayType == FpsDisplayMode.ADVANCED ? 0 : -5);
+		textUnderlay.height = textField.height + (displayType == FpsDisplayMode.ADVANCED ? 0 : -2);
 		
 		deltaTimeout = 0.0;
 	}
@@ -189,11 +192,12 @@ class DebugDisplay extends Sprite
 		
 		if (!canUpdate || (displayType == FpsDisplayMode.DISABLED)) return;
 		
-		var str = 'FPS: $currentFPS • [GC: ${FlxStringUtil.formatBytes(gcMemory)} | Task: ${FlxStringUtil.formatBytes(taskMemory)}]';
+		var str = '$currentFPS FPS';
 		
 		if (displayType == FpsDisplayMode.ADVANCED)
 		{
 			var className = Type.getClassName(Type.getClass(FlxG.state));
+            var commitHash = GitMacro.getGitCommitHash();
 			if (className.indexOf("ScriptedState") != -1)
 			{
 				var scripted:funkin.scripting.ScriptedState = cast FlxG.state;
@@ -201,7 +205,9 @@ class DebugDisplay extends Sprite
 				className = 'ScriptedState • (${path.replace('scripts/states/', '../../')})';
 			}
 			
+            str += '\nMemory: ${FlxStringUtil.formatBytes(gcMemory)} (GC) / ${FlxStringUtil.formatBytes(taskMemory)} (Task)';
 			str += '\nState: $className';
+            if (commitHash.length != 0) str += '\nCommit: $commitHash';
 			
 			for (fun in plugins)
 			{
