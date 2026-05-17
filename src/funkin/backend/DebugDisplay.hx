@@ -126,9 +126,7 @@ class DebugDisplay extends Sprite
 		textUnderlay = new Bitmap();
 		textUnderlay.bitmapData = new BitmapData(1, 1, true, 0x6F000000);
 		
-		final textFormat = new TextFormat(Assets.getFont("assets/fonts/aller.ttf").fontName, 14, color);
-		textFormat.leading = 1;
-		
+		final textFormat = new TextFormat(Assets.getFont("assets/fonts/ibmplex.ttf").fontName, 12, color);
 		textField = new TextField();
 		textField.selectable = false;
 		textField.mouseEnabled = false;
