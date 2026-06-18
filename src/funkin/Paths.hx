@@ -171,7 +171,6 @@ class Paths
 		var name = sanitize(song);
 		
 		var songKey:String = '$name/Track';
-		if (FunkinAssets.isDirectory(getPath('songs/$name/audio', null, checkMods))) songKey = '$name/audio/Track';
 		
 		if (postFix != null) songKey += '-$postFix';
 		
@@ -189,7 +188,6 @@ class Paths
 		var name = sanitize(song);
 		
 		var songKey:String = '$name/Voices';
-		if (FunkinAssets.isDirectory(getPath('songs/$name/audio', null, checkMods))) songKey = '$name/audio/Voices';
 		
 		if (postFix != null) songKey += '-$postFix';
 		
@@ -205,7 +203,6 @@ class Paths
 		var name = sanitize(song);
 		
 		var songKey:String = '$name/Inst';
-		if (FunkinAssets.isDirectory(getPath('songs/$name/audio', null, checkMods))) songKey = '$name/audio/Inst';
 		
 		if (postFix != null) songKey += '-$postFix';
 		

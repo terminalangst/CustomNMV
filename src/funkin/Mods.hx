@@ -113,17 +113,7 @@ class Mods
 		'scripts',
 		'noteskins',
 	];
-	
-	/**
-	 * makes `modsList.txt` in the case it doesnt exist
-	 */
-	static function ensureModsListExists()
-	{
-		if (!FunkinAssets.exists('modsList.txt'))
-		{
-			File.saveContent('modsList.txt', '');
-		}
-	}
+
 	
 	public static var globalMods:Array<String> = [];
 	
@@ -270,7 +260,6 @@ class Mods
 				list.push({folder: top, enabled: true});
 			}
 		}
-		// Scan for folders that aren't on modsList.txt yet
 		for (folder in getModDirectories())
 		{
 			if (folder.trim().length > 0
@@ -290,7 +279,6 @@ class Mods
 	public static function updateModList(top:String = '')
 	{
 		#if MODS_ALLOWED
-		ensureModsListExists();
 		// Find all that are already ordered
 		var list = getListAsArray();
 		
