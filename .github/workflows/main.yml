@@ -43,7 +43,7 @@ jobs: # FUCK MY LIFE BROOOOO
                 path: export/release/windows/bin
     #
     Linux:
-        runs-on: ubuntu-22.04
+        runs-on: ubuntu-latest
 
         steps:
             - uses: actions/checkout@v4
